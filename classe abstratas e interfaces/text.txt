@@ -1,0 +1,6 @@
+dispositivoEletronico=[smartphone(), notebook(), fone()]
+carregavel=[fone()]
+for dispEletro in dispositivoEletronico:
+    print(dispositivoEletronico.desligar(), dispositivoEletronico.ligar())
+for c in carregavel:
+    print(carregavel.carregar())
