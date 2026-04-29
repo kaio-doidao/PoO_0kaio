@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+#abstratas#
 class dispositivoEletronico(ABC):
     @abstractmethod
     def ligar(self):
@@ -14,7 +15,7 @@ class carregavel(ABC):
     def carregar(self):
         pass
 
-
+#concretas#
 
 
 class smartphone(dispositivoEletronico,carregavel):
@@ -47,17 +48,7 @@ class fone(dispositivoEletronico):
         return "fone ligando"
 
 
-
-
-
-
-
-
-
-
-
-
-
+#sistema#
 
 if __name__ == "__main__":
     
