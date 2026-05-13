@@ -1,4 +1,4 @@
-# Funções da agenda
+
 
 def adicionar_contato(agenda, nome, telefone):
     agenda[nome] = telefone
@@ -29,7 +29,7 @@ def listar_contatos(agenda):
             print(f"{nome}: {telefone}")
 
 
-# Programa principal
+
 
 agenda = {}
 

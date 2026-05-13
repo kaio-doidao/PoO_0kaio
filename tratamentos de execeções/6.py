@@ -11,7 +11,7 @@ def divisao_segura(a, b):
         return None
 
 
-# Testes
+
 print(divisao_segura(10, 2))
 print(divisao_segura(10, 0))
 print(divisao_segura(10, "a"))
