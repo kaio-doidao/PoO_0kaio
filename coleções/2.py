@@ -8,7 +8,7 @@ while True:
 
     ano = int(entrada)
 
-    # Conta quantas pessoas nasceram no mesmo ano
+    
     if ano in anos:
         anos[ano] += 1
     else:

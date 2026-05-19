@@ -1,4 +1,4 @@
-# Criando exceção personalizada
+
 class SenhaCurtaError(Exception):
     pass
 
@@ -12,7 +12,7 @@ def cadastrar_senha(senha):
     print("Senha cadastrada com sucesso!")
 
 
-# Testes
+
 try:
     cadastrar_senha("123")
 
