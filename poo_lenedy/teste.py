@@ -23,7 +23,7 @@ class ContaBancaria:
     #ta errado
     @classmethod
     def contas_duplicadas(cls):
-        return len(set(cls.numero_contas)) != len(cls.numero_contas)
+        return cls.numero_contas
 
     @classmethod
     def existe_conta_duplicada(cls):
