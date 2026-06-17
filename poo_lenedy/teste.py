@@ -4,6 +4,7 @@ from tkinter import messagebox, simpledialog
 class ContaBancaria:
 
     numero_contas=[]
+    contas_duplicadas1=[]
 
     def __init__(self,titular,numero,saldo):
         self.__titular=titular
@@ -18,12 +19,36 @@ class ContaBancaria:
         return self.__numero
     def get_saldo(self):
         return self.__saldo
-    def depositar(self):
+    
+
+    def depositar(self,valor):
+        if valor > 0:
+            self.__saldo += valor
+            return f"Depósito de R$ {valor:.2f} realizado."
+        else:
+            return "Valor inválido para depósito."
+
+    def exibir_dados(self):
+        return f"""
+        titular:{self.__titular}
+        conta:{self.__numero}
+        saldo:{self.__saldo}
+        """
+    def sacar(self):
         pass
+    def transferir(self):
+        pass
+
     #ta errado
     @classmethod
     def contas_duplicadas(cls):
-        return cls.numero_contas
+        vistos = set()
+        for numero in cls.numero_contas:
+            if numero in vistos:
+                cls.contas_duplicadas1.append(numero)
+            else:
+                vistos.add(numero)
+        return cls.contas_duplicadas
 
     @classmethod
     def existe_conta_duplicada(cls):
@@ -37,7 +62,7 @@ class BancoApp:
 
         self.contas = [
             ContaBancaria("kaio", 1001, 500),
-            ContaBancaria("rosinha", 1003, 1000),
+            ContaBancaria("rosinha", 1001, 1000),
             ContaBancaria("vitão", 1003, 300),
             ContaBancaria("ligia ", 1004, 20)
         ]
