@@ -27,6 +27,27 @@ class ContaBancaria:
             return f"Depósito de R$ {valor:.2f} realizado."
         else:
             return "Valor inválido para depósito."
+        
+    def sacar(self, valor):
+        if valor > 0:
+            if self.__saldo >= valor:
+                self.__saldo -= valor
+                return f"Saque de R$ {valor:.2f} realizado com sucesso."
+            else:
+                return "Saldo insuficiente."
+        else:
+            return "O valor do saque deve ser positivo."
+    
+    def transferir(self, valor, conta_destino):
+        if valor > 0:
+            if self.__saldo >= valor:
+                self.__saldo -= valor
+                conta_destino.depositar(valor)
+                return f"Transferência de R$ {valor:.2f} realizada com sucesso para {conta_destino.titular}."
+            else:
+                return "Saldo insuficiente para transferência."
+        else:
+            return "O valor da transferência deve ser positivo."
 
     def exibir_dados(self):
         return f"""
@@ -34,21 +55,22 @@ class ContaBancaria:
         conta:{self.__numero}
         saldo:{self.__saldo}
         """
-    def sacar(self):
-        pass
+   
     def transferir(self):
         pass
 
     #ta errado
     @classmethod
     def contas_duplicadas(cls):
+        duplicados=[]
         vistos = set()
+
         for numero in cls.numero_contas:
-            if numero in vistos:
-                cls.contas_duplicadas1.append(numero)
+            if numero in vistos and numero not in duplicados:
+                duplicados.append(numero)
             else:
                 vistos.add(numero)
-        return cls.contas_duplicadas
+        return duplicados
 
     @classmethod
     def existe_conta_duplicada(cls):
@@ -64,7 +86,7 @@ class BancoApp:
             ContaBancaria("kaio", 1001, 500),
             ContaBancaria("rosinha", 1001, 1000),
             ContaBancaria("vitão", 1003, 300),
-            ContaBancaria("ligia ", 1004, 20)
+            ContaBancaria("ligia ", 1003, 20)
         ]
         if (self.contas[0].existe_conta_duplicada()):
             messagebox.showerror("Erro","Existe conta duplicada,SEU BURRO!")
