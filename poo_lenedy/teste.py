@@ -24,30 +24,28 @@ class ContaBancaria:
     def depositar(self,valor):
         if valor > 0:
             self.__saldo += valor
-            return f"Depósito de R$ {valor:.2f} realizado."
+            return True
         else:
-            return "Valor inválido para depósito."
+            return False
         
     def sacar(self, valor):
-        if valor > 0:
-            if self.__saldo >= valor:
-                self.__saldo -= valor
-                return f"Saque de R$ {valor:.2f} realizado com sucesso."
-            else:
-                return "Saldo insuficiente."
-        else:
-            return "O valor do saque deve ser positivo."
+        
+        if self.__saldo >= valor:
+            self.__saldo -= valor
+            return True
+        else:                
+            return False
+        
+            
     
-    def transferir(self, valor, conta_destino):
-        if valor > 0:
-            if self.__saldo >= valor:
-                self.__saldo -= valor
-                conta_destino.depositar(valor)
-                return f"Transferência de R$ {valor:.2f} realizada com sucesso para {conta_destino.titular}."
-            else:
-                return "Saldo insuficiente para transferência."
+    def transferir(self, valor, obj):
+        if self.sacar(valor):
+            obj.depositar(valor)
+            return True
         else:
-            return "O valor da transferência deve ser positivo."
+            return False
+                
+                    
 
     def exibir_dados(self):
         return f"""
@@ -56,8 +54,7 @@ class ContaBancaria:
         saldo:{self.__saldo}
         """
    
-    def transferir(self):
-        pass
+    
 
     #ta errado
     @classmethod
@@ -84,9 +81,9 @@ class BancoApp:
 
         self.contas = [
             ContaBancaria("kaio", 1001, 500),
-            ContaBancaria("rosinha", 1001, 1000),
+            ContaBancaria("rosinha", 1002, 1000),
             ContaBancaria("vitão", 1003, 300),
-            ContaBancaria("ligia ", 1003, 20)
+            ContaBancaria("ligia ", 1004, 20)
         ]
         if (self.contas[0].existe_conta_duplicada()):
             messagebox.showerror("Erro","Existe conta duplicada,SEU BURRO!")
