@@ -1,13 +1,46 @@
 import tkinter as tk
 from tkinter import messagebox, simpledialog
 
+class Endereço:
+    def __init__(self,rua,numero,bairro,cidade):
+        self.__rua=rua
+        self.__numero=numero
+        self.__bairro=bairro
+        self.__cidade=cidade
+    def get_rua(self):
+        return self.__rua
+    def get_numero(self):
+        return self.__numero  
+    def get_bairro(self):
+        return self.__bairro
+    def get_cidade(self):
+        return self.__cidade
+    def exibir_dados(self):
+        return f"CIDADE:{self.get_cidade} BAIRRO:{self.get_bairro} RUA:{self.get_rua} NUMERO:{self.get_numero}"
+
+
+class Cliente:
+    def __init__(self,nome,cpf):
+        self.__nome=nome
+        self.__cpf=cpf
+        
+        
+    def get_nome(self):
+        return self.__nome
+    def get_cpf(self):
+        return self.__cpf
+    def exibir_dados(self):
+        return f":{self.get_nome} :{self.get_cpf}"
+    
+
+
 class ContaBancaria:
 
     numero_contas=[]
     contas_duplicadas1=[]
 
     def __init__(self,titular,numero,saldo):
-        self.__titular=titular
+        self.__cliente=titular
         self.__numero=numero
         self.__saldo=saldo
 
@@ -79,6 +112,8 @@ class BancoApp:
         self.janela.title("Sistema Bancário - POO em Python")
         self.janela.geometry("850x400")
 
+        cliente1 = Cliente(nome="eu",cpf="67676767",)
+        cliente1.exibir_dados
         self.contas = [
             ContaBancaria("kaio", 1001, 500),
             ContaBancaria("rosinha", 1002, 1000),
