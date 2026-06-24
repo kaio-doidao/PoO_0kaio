@@ -2,20 +2,21 @@ import tkinter as tk
 from tkinter import messagebox, simpledialog
 
 class Endereço:
-    def __init__(self,rua,numero,bairro,cidade):
-        self.__rua=rua
-        self.__numero=numero
-        self.__bairro=bairro
-        self.__cidade=cidade
-    def get_rua(self):
-        return self.__rua
-    def get_numero(self):
-        return self.__numero  
-    def get_bairro(self):
-        return self.__bairro
-    def get_cidade(self):
+   
+   def __init__(self,rua,numero,bairro,cidade):
+       self.__rua=rua
+       self.__numero=numero
+       self.__bairro=bairro
+       self.__cidade=cidade
+   def get_rua(self):
+       return self.__rua
+   def get_numero(self):
+       return self.__numero  
+   def get_bairro(self):
+       return self.__bairro
+   def get_cidade(self):
         return self.__cidade
-    def exibir_dados(self):
+   def exibir_dados(self):
         return f"CIDADE:{self.get_cidade} BAIRRO:{self.get_bairro} RUA:{self.get_rua} NUMERO:{self.get_numero}"
 
 
@@ -23,14 +24,20 @@ class Cliente:
     def __init__(self,nome,cpf):
         self.__nome=nome
         self.__cpf=cpf
-        
-        
+        self.__contas=[]
+
+    def get_contas(self):
+        return self.__contas    
     def get_nome(self):
         return self.__nome
     def get_cpf(self):
         return self.__cpf
+    
     def exibir_dados(self):
-        return f":{self.get_nome} :{self.get_cpf}"
+        return f":{self.get_nome()} :{self.get_cpf()}"
+    
+    def adicionar_conta(self,conta):
+        self.__contas.append(conta)
     
 
 
@@ -39,15 +46,16 @@ class ContaBancaria:
     numero_contas=[]
     contas_duplicadas1=[]
 
-    def __init__(self,titular,numero,saldo):
+    def __init__(self,titular:Cliente,conta,saldo):
         self.__cliente=titular
-        self.__numero=numero
+        self.__conta=numero
         self.__saldo=saldo
 
         ContaBancaria.numero_contas.append(numero)
+        self.__cliente.adicionar_conta(self)
 
     def get_titular(self):
-        return self.__titular
+        return self.__cliente
     def get_numero(self):
         return self.__numero
     def get_saldo(self):
@@ -82,14 +90,14 @@ class ContaBancaria:
 
     def exibir_dados(self):
         return f"""
-        titular:{self.__titular}
+        titular:{self.__cliente}
         conta:{self.__numero}
         saldo:{self.__saldo}
         """
    
     
 
-    #ta errado
+    #ta certo
     @classmethod
     def contas_duplicadas(cls):
         duplicados=[]
@@ -112,13 +120,15 @@ class BancoApp:
         self.janela.title("Sistema Bancário - POO em Python")
         self.janela.geometry("850x400")
 
-        cliente1 = Cliente(nome="eu",cpf="67676767",)
-        cliente1.exibir_dados
+        cliente1 = Cliente("eu","67676767",)
+        
+
+        
         self.contas = [
-            ContaBancaria("kaio", 1001, 500),
-            ContaBancaria("rosinha", 1002, 1000),
-            ContaBancaria("vitão", 1003, 300),
-            ContaBancaria("ligia ", 1004, 20)
+            ContaBancaria(cliente1.get_nome(), 1001, 500),
+           # ContaBancaria("rosinha", 1002, 1000),
+           # ContaBancaria("vitão", 1003, 300),
+            #ContaBancaria("ligia ", 1004, 20)
         ]
         if (self.contas[0].existe_conta_duplicada()):
             messagebox.showerror("Erro","Existe conta duplicada,SEU BURRO!")
