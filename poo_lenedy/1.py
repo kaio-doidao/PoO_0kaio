@@ -24,14 +24,12 @@ class Endereco:
         return f'Rua: {self.__rua}\nNumero: {self.__numero}\nBairro: {self.__bairro}\nCidade: {self.__cidade}'
 
 class Cliente:
-    def __init__(self,nome,cpf,endereco):
-        self.__nome=nome
-        self.__cpf=cpf
-        self.__contas=[]
+    def __init__(self, nome, cpf, endereco) -> None:
+        self.__nome = nome
+        self.__cpf = cpf
         self.__endereco = endereco
-    def get_contas(self):
-        return self.__contas    
-    
+        self.__contas = []
+
     def get_nome(self):
         return self.__nome
     
@@ -42,18 +40,13 @@ class Cliente:
         return self.__endereco
     
     def exibir_dados(self):
-        return f":{self.get_nome()} :{self.get_cpf()}"
+        return f'Nome: {self.__nome}\nCPF: {self.__cpf}\nEndereço: {self.__endereco}'
     
-    def adicionar_conta(self,conta):
+    def adicionar_conta(self, conta):
         self.__contas.append(conta)
     
 
-
 class ContaBancaria:
-
-    numero_contas=[]
-    contas_duplicadas1=[]
-
     numero_contas = []
     contas_duplicadas = []
     def __init__(self, nome, conta, saldo):
@@ -63,91 +56,92 @@ class ContaBancaria:
         ContaBancaria.numero_contas.append(self.__numero)
         self.__cliente.adicionar_conta(self)
 
-
-    def get_titular(self):
-        return self.__cliente.get_nome()
-    def get_numero(self):
+    @property
+    def titular(self):
+        return self.__cliente
+    
+    @property
+    def numero(self):
         return self.__numero
-    def get_saldo(self):
+    
+    @property
+    def saldo(self):
         return self.__saldo
     
-
-    def depositar(self,valor):
-        if valor > 0:
-            self.__saldo += valor
-            return True
-        else:
-            return False
-        
-    def sacar(self, valor):
-        
-        if self.__saldo >= valor:
-            self.__saldo -= valor
-            return True
-        else:                
-            return False
-        
-            
+    def get_titular(self):
+        return self.__cliente.get_nome()
     
-    def transferir(self, valor, obj):
-        if self.sacar(valor):
-            obj.depositar(valor)
-            return True
-        else:
-            return False
-                
-                    
-
-    def exibir_dados(self):
-        return f"""
-        titular:{self.__cliente}
-        conta:{self.__numero}
-        saldo:{self.__saldo}
-        """
-   
+    def get_numero(self):
+        return self.numero
     
-
-    #ta certo
-    @classmethod
-    def contas_duplicadas(cls):
-        duplicados=[]
-        vistos = set()
-
-        for numero in cls.numero_contas:
-            if numero in vistos and numero not in duplicados:
-                duplicados.append(numero)
-            else:
-                vistos.add(numero)
-        return duplicados
-
+    def get_saldo(self):
+        return self.saldo
+    
     @classmethod
     def existe_conta_duplicada(cls):
         return len(cls.numero_contas) != len(set(cls.numero_contas))
     
+    @classmethod
+    def contas_duplicadas(cls):
+        cls.contas_duplicadas = []
+        vistos = set()
+
+        for numero in cls.numero_contas:
+            if numero in vistos and numero not in cls.contas_duplicadas:
+                cls.contas_duplicadas.append(numero)
+            else:
+                vistos.add(numero)
+
+        return cls.contas_duplicadas
+    
+    def depositar(self, valor):
+        if valor < 0:
+            return False
+        else:
+            self.__saldo += valor
+            return True
+
+    def sacar(self, valor):
+        if valor < 0:
+            return False
+        elif valor > self.__saldo:
+            return False
+        else:
+            self.__saldo -= valor
+            return True
+
+    def transferir(self, valor, destino):
+            if self.sacar(valor):
+                destino.depositar(valor)
+                return True
+            else:
+                return False
+            
+    def exibir_dados(self):
+        return f"Nome: {self.__cliente.get_nome()}\nConta: {self.__numero}\nSaldo: R$ {self.__saldo:.2f}\nCPF: {self.__cliente.get_cpf()}\n{self.__cliente.get_endereco().exibir_dados()}"
+
+
+
 class BancoApp:
     def __init__(self, janela):
         self.janela = janela
         self.janela.title("Sistema Bancário - POO em Python")
         self.janela.geometry("850x400")
 
-        cliente1 = Cliente('carlos gulosao', 288383, Endereco('RUA OSCAR  ', 123, 'Bairro: BAIXA DO RATO SECO', 'Cidade: CM'))
-        cliente2 = Cliente('caio', 38834808, Endereco('Rua LOBINHO', 383, 'Bairro: ALPHAVILLE', 'Cidade:NT'))
-        cliente3 = Cliente('kaio', 3784982, Endereco('Rua MARIZ', 843, 'Bairro: GULANDIN', 'Cidade:EXT'))
-        cliente4 = Cliente('mario', 3994882, Endereco('Rua DE MARTE', 938, 'Bairro: OLHO DAGUA', 'Cidade: SGA'))
+        cliente1 = Cliente('João', 288383, Endereco('RUA 1', 123, 'Bairro 1', 'Cidade 1'))
+        cliente2 = Cliente('Esther', 38834808, Endereco('Rua 2', 383, 'Bairro 2', 'Cidade 2'))
+        cliente3 = Cliente('Pedro', 3784982, Endereco('Rua 3', 843, 'Bairro 3', 'Cidade 3'))
+        cliente4 = Cliente('Maria', 3994882, Endereco('Rua 4', 938, 'Bairro 4', 'Cidade 4'))
 
-        
-
-        
         self.contas = [
-            
             ContaBancaria(cliente1, 1001, 500),
             ContaBancaria(cliente2, 1002, 1000),
             ContaBancaria(cliente3, 1003, 300),
             ContaBancaria(cliente4, 1004, 20)
         ]
-        if (self.contas[0].existe_conta_duplicada()):
-            messagebox.showerror("Erro","Existe conta duplicada,SEU BURRO!")
-            messagebox.showinfo("contas",self.contas[0].contas_duplicadas())
+        if ContaBancaria.existe_conta_duplicada():
+            messagebox.showerror("Erro", "Existe Conta Duplicada")
+            messagebox.showinfo("Contas", ContaBancaria.contas_duplicadas())
             exit()
 
         self.criar_interface()
@@ -205,7 +199,7 @@ class BancoApp:
                 width=15,
                 command=lambda c=conta: self.depositar(c)
             )
-            btn_depositar.config(state="active")
+            btn_depositar.config(state="normal")
             btn_depositar.pack(pady=2)
 
             btn_sacar = tk.Button(
@@ -214,7 +208,7 @@ class BancoApp:
                 width=15,
                 command=lambda c=conta: self.sacar(c)
             )
-            btn_sacar.config(state="active")
+            btn_sacar.config(state="normal")
             btn_sacar.pack(pady=2)
 
             btn_transferir = tk.Button(
@@ -223,7 +217,7 @@ class BancoApp:
                 width=15,
                 command=lambda c=conta: self.transferir(c)
             )
-            btn_transferir.config(state="active")
+            btn_transferir.config(state="normal")
             btn_transferir.pack(pady=2)
 
             btn_dados = tk.Button(
@@ -232,7 +226,7 @@ class BancoApp:
                 width=15,
                 command=lambda c=conta: self.exibir_dados(c)
             )
-            btn_dados.config(state="active")
+            btn_dados.config(state="normal")
             btn_dados.pack(pady=2)
 
     def depositar(self, conta):
