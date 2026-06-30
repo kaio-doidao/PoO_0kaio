@@ -1,8 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox, simpledialog
-from contabancaria import Cliente, ContaBancaria, Endereco
+from contabancaria import Cliente, ContaBancaria,Endereco
 
-    
 class BancoApp:
     def __init__(self, janela):
         self.janela = janela
@@ -24,10 +23,8 @@ class BancoApp:
             ContaBancaria(cliente3, 1003, 300),
             ContaBancaria(cliente4, 1004, 20)
         ]
-        if (self.contas[0].existe_conta_duplicada()):
-            messagebox.showerror("Erro","Existe conta duplicada,SEU BURRO!")
-            messagebox.showinfo("contas",self.contas[0].contas_duplicadas())
-            exit()
+
+        # messagebox.showinfo("Sucesso", "Depósito realizado.")
 
         self.criar_interface()
 
@@ -84,7 +81,7 @@ class BancoApp:
                 width=15,
                 command=lambda c=conta: self.depositar(c)
             )
-            btn_depositar.config(state="active")
+            # btn_depositar.config(state="disabled")
             btn_depositar.pack(pady=2)
 
             btn_sacar = tk.Button(
@@ -93,7 +90,7 @@ class BancoApp:
                 width=15,
                 command=lambda c=conta: self.sacar(c)
             )
-            btn_sacar.config(state="active")
+            # btn_sacar.config(state="disabled")
             btn_sacar.pack(pady=2)
 
             btn_transferir = tk.Button(
@@ -102,7 +99,7 @@ class BancoApp:
                 width=15,
                 command=lambda c=conta: self.transferir(c)
             )
-            btn_transferir.config(state="active")
+            # btn_transferir.config(state="disabled")
             btn_transferir.pack(pady=2)
 
             btn_dados = tk.Button(
@@ -111,8 +108,26 @@ class BancoApp:
                 width=15,
                 command=lambda c=conta: self.exibir_dados(c)
             )
-            btn_dados.config(state="active")
+            # btn_dados.config(state="disabled")
             btn_dados.pack(pady=2)
+
+            btn_rendimento = tk.Button(
+                frame,
+                text="Render Juros",
+                width=15,
+                command=lambda c=conta: self.render_juros(c)
+            )
+            btn_rendimento.config(state="disabled")
+            btn_rendimento.pack(pady=2)
+
+            btn_taxa = tk.Button(
+                frame,
+                text="Cobrar Taxa",
+                width=15,
+                command=lambda c=conta: self.cobrar_taxa(c)
+            )
+            btn_taxa.config(state="disabled")
+            btn_taxa.pack(pady=2)
 
     def depositar(self, conta):
         valor = simpledialog.askfloat("Depósito", "Digite o valor do depósito:")
@@ -171,6 +186,21 @@ class BancoApp:
 
     def exibir_dados(self, conta):
         messagebox.showinfo("Dados da Conta", conta.exibir_dados())
+
+    def render_juros(self, conta):
+        if(conta.get_tipo_conta() == "Conta Poupança"):
+            conta.render_juros()
+            messagebox.showerror("Sucesso", "Rendimento efetuado.")
+        else:
+            messagebox.showerror("Erro", "Conta não disponibiliza rendimento")
+    
+    def cobrar_taxa(self, conta):
+        if(conta.get_tipo_conta() == "Conta Corrente"):
+            conta.cobrar_taxa()
+            messagebox.showerror("Sucesso", "Rendimento efetuado.")
+        else:
+            messagebox.showerror("Erro", "Cobrança invalida para essa conta")
+
 
 
 janela = tk.Tk()

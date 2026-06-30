@@ -123,8 +123,16 @@ class ContaBancaria:
 class ContaCorrente(ContaBancaria):
     def __init__(self, nome, conta, saldo,tarifa_mensal,limite):
         super().__init__(nome, conta, saldo)
-        self.tarifa_mensal=tarifa_mensal
+        self.__tarifa_mensal=tarifa_mensal
         self.limite=limite
-
+    def exibir_dados(self):
+        return f""
     def sacar(self, valor):
-        return super().sacar(valor)
+        pass
+    def cobrar_tarifa(self):
+        super().sacar(self.__tarifa_mensal)
+    
+class ContaPoupanca(ContaBancaria):
+    pass
+class ContaSalario(ContaBancaria):
+    pass
