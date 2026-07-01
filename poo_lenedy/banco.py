@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox, simpledialog
-from contabancaria import Cliente, ContaBancaria,Endereco
+from contabancaria import Cliente, ContaBancaria,Endereco,ContaCorrente
 
 class BancoApp:
     def __init__(self, janela):
@@ -8,7 +8,7 @@ class BancoApp:
         self.janela.title("Sistema Bancário - POO em Python")
         self.janela.geometry("850x400")
 
-        cliente1 = Cliente('carlos gulosao', 288383, Endereco('RUA OSCAR  ', 123, 'Bairro: BAIXA DO RATO SECO', 'Cidade: CM'))
+        cliente1 = Cliente('carlos', 288383, Endereco('RUA OSCAR  ', 123, 'Bairro: BAIXA DO RATO SECO', 'Cidade: CM'))
         cliente2 = Cliente('caio', 38834808, Endereco('Rua LOBINHO', 383, 'Bairro: ALPHAVILLE', 'Cidade:NT'))
         cliente3 = Cliente('kaio', 3784982, Endereco('Rua MARIZ', 843, 'Bairro: GULANDIN', 'Cidade:EXT'))
         cliente4 = Cliente('mario', 3994882, Endereco('Rua DE MARTE', 938, 'Bairro: OLHO DAGUA', 'Cidade: SGA'))
@@ -19,7 +19,7 @@ class BancoApp:
         self.contas = [
             
             ContaBancaria(cliente1, 1001, 500),
-            ContaBancaria(cliente2, 1002, 1000),
+            ContaCorrente(cliente2, 1002, 1000,100,100),
             ContaBancaria(cliente3, 1003, 300),
             ContaBancaria(cliente4, 1004, 20)
         ]
@@ -117,7 +117,7 @@ class BancoApp:
                 width=15,
                 command=lambda c=conta: self.render_juros(c)
             )
-            btn_rendimento.config(state="disabled")
+            #btn_rendimento.config(state="disabled")
             btn_rendimento.pack(pady=2)
 
             btn_taxa = tk.Button(
@@ -126,7 +126,7 @@ class BancoApp:
                 width=15,
                 command=lambda c=conta: self.cobrar_taxa(c)
             )
-            btn_taxa.config(state="disabled")
+            #btn_taxa.config(state="disabled")
             btn_taxa.pack(pady=2)
 
     def depositar(self, conta):

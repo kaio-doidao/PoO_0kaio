@@ -55,7 +55,7 @@ class ContaBancaria:
     def __init__(self, nome, conta, saldo):
         self.__cliente = nome
         self.__numero = conta
-        self.__saldo = saldo
+        self._saldo = saldo
         ContaBancaria.numero_contas.append(self.__numero)
         self.__cliente.adicionar_conta(self)
 
@@ -65,20 +65,20 @@ class ContaBancaria:
     def get_numero(self):
         return self.__numero
     def get_saldo(self):
-        return self.__saldo
+        return self._saldo
     
 
     def depositar(self,valor):
         if valor > 0:
-            self.__saldo += valor
+            self._saldo += valor
             return True
         else:
             return False
         
     def sacar(self, valor):
         
-        if self.__saldo >= valor:
-            self.__saldo -= valor
+        if self._saldo >= valor:
+            self._saldo -= valor
             return True
         else:                
             return False
@@ -96,9 +96,9 @@ class ContaBancaria:
 
     def exibir_dados(self):
         return f"""
-        titular:{self.__cliente}
-        conta:{self.__numero}
-        saldo:{self.__saldo}
+    titular:{self.__cliente.get_nome()}
+    conta:{self.get_numero()}
+    saldo:{self.get_saldo()}
         """
    
     
@@ -124,15 +124,42 @@ class ContaCorrente(ContaBancaria):
     def __init__(self, nome, conta, saldo,tarifa_mensal,limite):
         super().__init__(nome, conta, saldo)
         self.__tarifa_mensal=tarifa_mensal
-        self.limite=limite
+        self.__limite=limite
+    def get_tipo_conta(self):
+        return "conta corrente"
     def exibir_dados(self):
-        return f""
+        return (
+            super().exibir_dados()+
+            f"tipo:{self.get_tipo_conta()}\n"
+            f"tarifa:{self.__tarifa_mensal}\n "+
+            f"limite:{self.__limite}"
+        )
+           
+    
     def sacar(self, valor):
         pass
+
     def cobrar_tarifa(self):
         super().sacar(self.__tarifa_mensal)
     
 class ContaPoupanca(ContaBancaria):
-    pass
+    def __init__(self, nome, conta, saldo,taxa_rendimento):
+        super().__init__(nome, conta, saldo)
+        self.taxa_rendimento=taxa_rendimento
+    def reder_juros(self):
+        pass
+    def exibir_dados(self):
+        return (
+            super().exibir_dados()
+            )
+    def sacar(self):
+        pass
+    def get_tipo_conta(self):
+        return "Conta Poupança"
+
 class ContaSalario(ContaBancaria):
-    pass
+    def __init__(self, nome, conta, saldo,empresa,saques_realizados,limite_saques):
+        super().__init__(nome, conta, saldo)
+        self.__empresa=empresa
+        self.__saques_realizados=saques_realizados
+        self.__limite_saques=limite_saques
