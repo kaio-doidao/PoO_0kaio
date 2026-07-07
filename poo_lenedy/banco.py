@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox, simpledialog
-from contabancaria import Cliente, ContaBancaria,Endereco,ContaCorrente
+from contabancaria import Cliente, ContaBancaria,Endereco,ContaCorrente,ContaPoupanca
 
 class BancoApp:
     def __init__(self, janela):
@@ -13,7 +13,6 @@ class BancoApp:
         cliente3 = Cliente('kaio', 3784982, Endereco('Rua MARIZ', 843, 'Bairro: GULANDIN', 'Cidade:EXT'))
         cliente4 = Cliente('mario', 3994882, Endereco('Rua DE MARTE', 938, 'Bairro: OLHO DAGUA', 'Cidade: SGA'))
 
-        
 
         
         self.contas = [
@@ -66,7 +65,9 @@ class BancoApp:
                 frame,
                 text=f"Conta: {conta.get_numero()}"
             )
-            lbl_numero.pack()
+            lbl_numero.pack(pady=5)
+
+           
 
             lbl_saldo = tk.Label(
                 frame,

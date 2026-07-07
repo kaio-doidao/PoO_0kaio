@@ -99,6 +99,10 @@ class ContaBancaria:
     titular:{self.__cliente.get_nome()}
     conta:{self.get_numero()}
     saldo:{self.get_saldo()}
+    cpf:{self.__cliente.get_cpf()}
+    endereço: rua:{self.__cliente.get_rua()}
+              numero:{self.__cliente.get_numero()}
+              cidade:{self.__cliente.get_cidade()}
         """
    
     
