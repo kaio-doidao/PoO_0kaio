@@ -358,7 +358,7 @@ class BancoApp:
     def criar_conta(self):
         janela_cadastro = tk.Toplevel(self.janela)
         janela_cadastro.title("Criar nova conta")
-        janela_cadastro.geometry("1000x700")
+        janela_cadastro.geometry("300x1000")
         janela_cadastro.resizable(False, False)
 
         tk.Label(janela_cadastro, text="Titular:").pack(pady=5)
@@ -372,9 +372,36 @@ class BancoApp:
         tk.Label(janela_cadastro, text="Saldo inicial:").pack(pady=5)
         entrada_saldo = tk.Entry(janela_cadastro)
         entrada_saldo.pack()
+
+
+
         tk.Label(janela_cadastro, text="CPF:").pack(pady=5)
         entrada_cpf = tk.Entry(janela_cadastro)
         entrada_cpf.pack()
+
+        tk.Label(janela_cadastro, text="Tipo Conta:").pack(pady=5)
+        entrada_tipo_conta = tk.Entry(janela_cadastro)
+        entrada_tipo_conta.pack()
+
+        tk.Label(janela_cadastro, text="Taxa:").pack(pady=5)
+        entrada_taxa = tk.Entry(janela_cadastro)
+        entrada_taxa.pack()
+
+        tk.Label(janela_cadastro, text="Empresa:").pack(pady=5)
+        entrada_empresa = tk.Entry(janela_cadastro)
+        entrada_empresa.pack()
+
+        tk.Label(janela_cadastro, text="Tarifa Mensal:").pack(pady=5)
+        entrada_tarifa_mensal = tk.Entry(janela_cadastro)
+        entrada_tarifa_mensal.pack()
+
+        tk.Label(janela_cadastro, text="Saques Realizados:").pack(pady=5)
+        entrada_saques_realizados = tk.Entry(janela_cadastro)
+        entrada_saques_realizados.pack()
+
+        tk.Label(janela_cadastro, text="Limtes de Saques:").pack(pady=5)
+        entrada_limites_saques = tk.Entry(janela_cadastro)
+        entrada_limites_saques.pack()
 
         tk.Label(janela_cadastro, text="Cidade:").pack(pady=5)
         entrada_cidade = tk.Entry(janela_cadastro)
@@ -397,6 +424,8 @@ class BancoApp:
             numero = entrada_numero.get()
             saldo = entrada_saldo.get()
             cpf = entrada_cpf.get().replace(".", "").replace("-", "")
+            tipo_conta = entrada_tipo_conta.get()
+
             cidade = entrada_cidade.get()
             bairro = entrada_bairro.get()
             rua = entrada_rua.get()
