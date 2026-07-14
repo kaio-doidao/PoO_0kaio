@@ -39,7 +39,7 @@ class Cliente:
         return self.__endereco
     
     def exibir_dados(self):
-        return f":{self.get_nome()} :{self.get_cpf()}"
+        return f"nome:{self.get_nome()} cpf:{self.get_cpf()} endereço:{self.__endereco.exibir_dados()}"
     
     def adicionar_conta(self,conta):
         self.__contas.append(conta)
@@ -56,10 +56,22 @@ class ContaBancaria:
         self.__cliente = nome
         self.__numero = conta
         self._saldo = saldo
+        
         ContaBancaria.numero_contas.append(self.__numero)
         self.__cliente.adicionar_conta(self)
 
-
+    @property
+    def titular(self):
+        return self.__cliente
+    
+    @property
+    def numero(self):
+        return self.__numero
+    
+    @property
+    def saldo(self):
+        return self.__saldo
+    
     def get_titular(self):
         return self.__cliente.get_nome()
     def get_numero(self):
@@ -100,9 +112,9 @@ class ContaBancaria:
     conta:{self.get_numero()}
     saldo:{self.get_saldo()}
     cpf:{self.__cliente.get_cpf()}
-    endereço: rua:{self.__cliente.get_rua()}
-              numero:{self.__cliente.get_numero()}
-              cidade:{self.__cliente.get_cidade()}
+    endereço: rua:{self.__cliente.get_endereco().exibir_dados()}
+            #  numero:{self.__cliente.get_numero()}
+              #cidade:{self.__cliente.get_cidade()}
         """
    
     

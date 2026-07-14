@@ -8,7 +8,7 @@ class BancoApp:
         self.janela.title("Sistema Bancário - POO em Python")
         self.janela.geometry("850x400")
 
-        cliente1 = Cliente('carlos', 288383, Endereco('RUA OSCAR  ', 123, 'Bairro: BAIXA DO RATO SECO', 'Cidade: CM'))
+        cliente1 = Cliente('carlos', 288383, Endereco('RUA OSCAR  ', 123, 'Bairro', ' CM'))
         cliente2 = Cliente('caio', 38834808, Endereco('Rua LOBINHO', 383, 'Bairro: ALPHAVILLE', 'Cidade:NT'))
         cliente3 = Cliente('kaio', 3784982, Endereco('Rua MARIZ', 843, 'Bairro: GULANDIN', 'Cidade:EXT'))
         cliente4 = Cliente('mario', 3994882, Endereco('Rua DE MARTE', 938, 'Bairro: OLHO DAGUA', 'Cidade: SGA'))
@@ -18,7 +18,7 @@ class BancoApp:
         self.contas = [
             
             ContaBancaria(cliente1, 1001, 500),
-            ContaCorrente(cliente2, 1002, 1000,100,100),
+            ContaBancaria(cliente2, 1002, 1000),
             ContaBancaria(cliente3, 1003, 300),
             ContaBancaria(cliente4, 1004, 20)
         ]
